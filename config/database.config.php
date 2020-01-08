@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "user" => "",
+    "user" => "root",
     "pass" => "",
-    "dbname" => ""
+    "dbname" => "mcstats"
 ];
