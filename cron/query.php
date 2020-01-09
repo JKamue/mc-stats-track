@@ -8,4 +8,6 @@ $dbData = require_once "../config/database.config.php";
 $db = new Database($dbData["user"], $dbData["pass"], $dbData["dbname"]);
 
 $collector = new StatsCollector($db);
-$collector->saveAllHourlyStats();
+$stats = $collector->saveAllHourlyStats();
+
+var_dump($stats);
