@@ -106,6 +106,7 @@ class MinecraftPing
                 throw new MinecraftPingException('JSON parsing failed');
             }
         }
+        $Data["responseTime"] = (microtime(true) - $TimeStart) * 1000;
         return $Data;
     }
 

@@ -10,7 +10,17 @@ class StatsCollector
         $this->db = $db;
     }
 
-    public function saveHourlyStats(string $serverId)
+    public function saveAllHourlyStats()
+    {
+        $servers = $this->db->query("SELECT `server` AS 'serverId', `adress` FROM `servers`")
+            ->all();
+
+        foreach ($servers as &$server) {
+            $this->saveHourlyStats($server["serverId"], $server["adress"]);
+        }
+    }
+
+    public function saveHourlyStats(string $serverId, string $serverAdress)
     {
         $time = (new DateTime())->format('Y-m-d H:00:00');
 
@@ -23,17 +33,14 @@ class StatsCollector
             return;
         }
 
-        $serverAdress = $this->db->query("SELECT adress FROM servers WHERE server = ?")
-            ->bind(1, $serverId)
-            ->single()["adress"];
-
         $minecraftPingData = \xPaw\MinecraftPing::getPingData($serverAdress);
 
-        $this->db->query("INSERT INTO `data` (`when`, `online`, `max`, `server`) VALUES (?, ?, ?, ?)")
+        $this->db->query("INSERT INTO `data` (`when`, `online`, `max`, `ping`, `server`) VALUES (?, ?, ?, ?, ?)")
             ->bind(1, $time)
             ->bind(2, $minecraftPingData["players"]["online"])
             ->bind(3, $minecraftPingData["players"]["max"])
-            ->bind(4, $serverId)
+            ->bind(4, $minecraftPingData["responseTime"])
+            ->bind(5, $serverId)
             ->execute();
     }
 }
