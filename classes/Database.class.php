@@ -55,8 +55,7 @@ class Database
 
     public function execute()
     {
-        $this->stmt->execute();
-        print_r($this->stmt->errorInfo());
+        return $this->stmt->execute();
     }
 
     public function all()
