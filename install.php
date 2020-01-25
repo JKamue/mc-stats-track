@@ -72,6 +72,7 @@ return [
     $stats = $collector->saveAllHourlyStats();
 
     echo json_encode($stats);
+    unlink("install.php");
     exit();
 }
 ?>
