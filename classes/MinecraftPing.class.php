@@ -23,7 +23,9 @@ class MinecraftPing
     public static function getPingData($Address, $Port = 25565, $Timeout = 2, $ResolveSRV = true)
     {
         $minecraftPing = new MinecraftPing($Address, $Port, $Timeout, $ResolveSRV);
-        return $minecraftPing->Query();
+        $data = $minecraftPing->Query();
+        $minecraftPing->Close();
+        return $data;
     }
 
     public function __construct($Address, $Port = 25565, $Timeout = 2, $ResolveSRV = true)
