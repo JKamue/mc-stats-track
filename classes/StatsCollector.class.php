@@ -43,6 +43,10 @@ class StatsCollector
 
         try {
             $minecraftPingData = MinecraftPing::getPingData($serverAdress);
+
+            if ($minecraftPingData["players"]["online"] == NULL) {
+                return false;
+            }
         } catch (Exception $e) {
             return false;
         }
